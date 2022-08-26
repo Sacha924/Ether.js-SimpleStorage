@@ -11,7 +11,11 @@ async function main() {
   const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL);
   //his is the way that our script is going to connect to our local blockchain
   const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
-  // Now pasting our private key directly into our code is a huge NO. It's okay right now, since we're just using one of the ganache private keys, and we have no risk of having any money associated with this account.
+
+  // const encryptedJson = fs.readFileSync("./.encryptedKey.json", "utf8");
+  // let wallet = new ethers.Wallet.fromEncryptedJsonSync(encryptedJson, process.env.PRIVATE_KEY_PASSWORD);
+  //now we have to connect this wallet back to our provider. If you look here, we're not connecting our wallet with a provider. When we make our transactions with our contract factory, we need to make sure the wallet knows about the provider here. So we can just :
+  // wallet = await wallet.connect(provider);
 
   //In order to deploy our contract, we're gonna need the ABI and we're going to need the binary compiled code of the contract.
   const abi = fs.readFileSync("SimpleStorage_sol_SimpleStorage.abi", "utf8");
@@ -24,6 +28,7 @@ async function main() {
   //console.log(contract);
   //we can wait for a certain number of blocks for our contract finish with so we've deployed the contract. But maybe we want to wait one block to make sure it actually gets attached to the chain.
   await contract.deployTransaction.wait(1);
+  console.log(`Contract adrress ${contract.address}`);
 
   let currentFavoriteNumber = await contract.retrieve();
   console.log(`Current favorite number : ${currentFavoriteNumber.toString()}`);
