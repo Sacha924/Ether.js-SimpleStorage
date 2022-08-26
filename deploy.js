@@ -12,7 +12,7 @@ async function main() {
   //his is the way that our script is going to connect to our local blockchain
   const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 
-  // const encryptedJson = fs.readFileSync("./.encryptedKey.json", "utf8");
+  // const encryptedJson = fs.readFileSync("./.encryptedKey.json", "utf8");git 
   // let wallet = new ethers.Wallet.fromEncryptedJsonSync(encryptedJson, process.env.PRIVATE_KEY_PASSWORD);
   //now we have to connect this wallet back to our provider. If you look here, we're not connecting our wallet with a provider. When we make our transactions with our contract factory, we need to make sure the wallet knows about the provider here. So we can just :
   // wallet = await wallet.connect(provider);
